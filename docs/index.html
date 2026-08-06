@@ -1,57 +1,838 @@
-PULSE · DONOR JOURNEY
-Every visit, one smooth loop.
-From the first text to the thank-you — here's what the donor experience looks like with a phone, a wristband, or both. Zero friction, full visibility.
-Your visit
-is coming up
-I'm on my way
-BEFORE THE VISIT
-A branded text, not an app download
-The donor gets a text with a link — tap to confirm, reschedule, or let you know they're running late. No app, no login, no friction. Works on any phone.
-"Oh nice, I can just tap — I don't have to call or download anything."
-Phone or band
-ARRIVAL
-Walk in and you're checked in
-Donors with a phone scan a poster QR and confirm — they're in the queue instantly. Donors without a phone (or who'd rather not use one) get a wristband at the front desk that tracks their journey the same way. Either path, same experience. Walk-ins register in seconds.
-"I left my phone in the car — they just handed me a wristband and I was good to go."
-Typical wait
-15–25
-minutes
-You're in the queue
-or
-PULSE
-PULSE
-DONOR
-44801
-Paper QR Wristband
-No phone? No problem.
-IN THE QUEUE
-An honest wait, not a guessing game
-Donors with their phone see a live, self-updating wait range — realistic, not promised. If the estimate can't be confident, it gracefully falls back to a position count. Wristband-only donors stay visible in the queue and get called forward by staff the same way. Either path, nobody's forgotten.
-"I know roughly how long, so I can grab a coffee and come back."
-You're up
-Head to screening
-CALLED FORWARD
-One notification when it's actually your turn
-Pulse only sends this when the donor is cleared and a spot is genuinely ready — high confidence, no false calls. The donor walks up to something, not to a second wait.
-"They texted me exactly when to come up. No name shouted across the room."
-You're doing
-great ♥
-IN THE CHAIR
-A calm moment, not a clinical stare
-During the donation, the donor's phone becomes a quiet companion — optional, one-handed, supportive. Not entertainment, not medical. A gentle primer for what's next, including a preview of their recovery perk.
-"This is actually... kind of pleasant? And there's a perk waiting for me?"
-12:34
-recovery
-RECOVERY
-One tap — bed freed, timer started, perk unlocked
-At the snack area, the donor scans their wristband or taps on their phone. That single gesture frees their donation spot, starts the center's observation timer, and reveals a sponsor perk and a quick satisfaction survey. Phone or band — same tap, same result.
-"Free coffee from the place next door? And all I did was scan my wristband."
-5th
-donation
-How are you feeling today?
-AFTER DEPARTURE
-The visit ends, the care doesn't
-Thank-you, milestone recognition, and an easy path to rebook. Then, wellness check-ins go out by text — a simple "how are you feeling?" If anything's off, your team gets a callback prompt. Every touchpoint is documented.
-"They actually checked in on me the next day. That's... really thoughtful."
-One loop. Every donor. Documented.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse — The Donor Journey</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+  :root {
+    --pulse-green: #2A9D5C;
+    --pulse-green-light: #E8F5EE;
+    --pulse-green-dark: #1E7A45;
+    --dark: #1A1A2E;
+    --mid: #3A3A52;
+    --soft: #6B6B80;
+    --bg: #FAFCFB;
+    --card-bg: #FFFFFF;
+    --divider: #E2E8E4;
+    --warm-accent: #D4A574;
+    --alert-soft: #FFF3E8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 60px 40px 40px;
+    background: linear-gradient(180deg, var(--pulse-green-light) 0%, var(--bg) 100%);
+  }
+  .header .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pulse-green);
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .header h1 span { color: var(--pulse-green); }
+  .header .subtitle {
+    font-size: 17px;
+    color: var(--soft);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── STORYBOARD PANELS ── */
+  .storyboard {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+    position: relative;
+  }
+
+  /* Vertical timeline spine */
+  .storyboard::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 60px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--pulse-green) 0%, var(--divider) 100%);
+    transform: translateX(-50%);
+  }
+
+  .panel {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .panel:nth-child(even) { flex-direction: row-reverse; }
+
+  /* Timeline dot */
+  .panel::before {
+    content: attr(data-step);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--pulse-green);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 0 0 6px var(--bg), 0 2px 8px rgba(42,157,92,0.25);
+  }
+
+  .panel-illustration {
+    flex: 0 0 calc(50% - 44px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .panel:nth-child(odd) .panel-illustration { justify-content: flex-end; }
+  .panel:nth-child(even) .panel-illustration { justify-content: flex-start; }
+
+  .panel-illustration svg {
+    width: 200px;
+    height: 160px;
+  }
+
+  .panel-content {
+    flex: 0 0 calc(50% - 44px);
+    padding: 28px 32px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    border: 1px solid var(--divider);
+  }
+
+  .panel-content .moment-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--pulse-green);
+    margin-bottom: 8px;
+  }
+
+  .panel-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .panel-content p {
+    font-size: 14px;
+    color: var(--soft);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .panel-content .donor-feels {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--divider);
+    font-size: 13px;
+    color: var(--mid);
+    font-style: italic;
+  }
+  .panel-content .donor-feels::before {
+    content: '💬 ';
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--divider);
+    margin-top: 20px;
+  }
+  .footer .tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .footer .brand {
+    font-size: 13px;
+    color: var(--soft);
+    letter-spacing: 1px;
+  }
+  .footer .brand strong {
+    color: var(--pulse-green);
+    font-weight: 600;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .storyboard::before { left: 24px; }
+    .panel, .panel:nth-child(even) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 56px;
+      gap: 16px;
+    }
+    .panel::before {
+      left: 24px;
+      top: 32px;
+      transform: translate(-50%, 0);
+    }
+    .panel-illustration, .panel:nth-child(odd) .panel-illustration,
+    .panel:nth-child(even) .panel-illustration {
+      flex: none;
+      justify-content: center;
+      width: 100%;
+    }
+    .panel-content { flex: none; width: 100%; }
+    .panel-illustration svg { width: 160px; height: 128px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .storyboard::before { display: none; }
+    .panel::before { box-shadow: none; border: 2px solid var(--pulse-green); }
+    .panel-content { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Pulse &middot; Donor Journey</div>
+  <h1>Every visit, <span>one smooth loop.</span></h1>
+  <p class="subtitle">From the first text to the thank-you — here's what the donor experience looks like with a phone, a wristband, or both. Zero friction, full visibility.</p>
+</div>
+
+<div class="storyboard">
+
+  <!-- PANEL 1 — The text -->
+  <div class="panel" data-step="1">
+    <div class="panel-illustration">
+      <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Phone -->
+        <rect x="60" y="16" width="80" height="128" rx="12" fill="#F0F7F2" stroke="#2A9D5C" stroke-width="2"/>
+        <rect x="68" y="30" width="64" height="100" rx="4" fill="white" stroke="#E2E8E4" stroke-width="1"/>
+        <circle cx="100" cy="23" r="2" fill="#2A9D5C" opacity="0.5"/>
+        <!-- Message bubble -->
+        <rect x="74" y="42" width="52" height="28" rx="8" fill="#2A9D5C"/>
+        <text x="100" y="56" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="7" font-weight="600">Your visit</text>
+        <text x="100" y="65" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="7" font-weight="600">is coming up</text>
+        <!-- Notification ring -->
+        <circle cx="148" cy="36" r="14" fill="#2A9D5C" opacity="0.12"/>
+        <circle cx="148" cy="36" r="8" fill="#2A9D5C" opacity="0.25"/>
+        <circle cx="148" cy="36" r="3" fill="#2A9D5C"/>
+        <!-- Tap circles -->
+        <rect x="74" y="78" width="52" height="14" rx="7" fill="#E8F5EE" stroke="#2A9D5C" stroke-width="1"/>
+        <text x="100" y="88" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="6.5" font-weight="600">I'm on my way</text>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">Before the visit</div>
+      <h3>A branded text, not an app download</h3>
+      <p>The donor gets a text with a link — tap to confirm, reschedule, or let you know they're running late. No app, no login, no friction. Works on any phone.</p>
+      <div class="donor-feels">"Oh nice, I can just tap — I don't have to call or download anything."</div>
+    </div>
+  </div>
+
+  <!-- PANEL 2 — Arrival -->
+  <div class="panel" data-step="2">
+    <div class="panel-illustration">
+      <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Building silhouette -->
+        <rect x="40" y="52" width="120" height="72" rx="4" fill="#F0F7F2" stroke="#E2E8E4" stroke-width="1.5"/>
+        <rect x="56" y="66" width="16" height="20" rx="2" fill="white" stroke="#2A9D5C" stroke-width="1.2"/>
+        <rect x="92" y="66" width="16" height="20" rx="2" fill="white" stroke="#2A9D5C" stroke-width="1.2"/>
+        <rect x="128" y="66" width="16" height="20" rx="2" fill="white" stroke="#2A9D5C" stroke-width="1.2"/>
+        <!-- Door -->
+        <rect x="86" y="96" width="28" height="28" rx="3" fill="#2A9D5C" opacity="0.15" stroke="#2A9D5C" stroke-width="1.5"/>
+        <!-- QR poster on wall -->
+        <rect x="52" y="96" width="22" height="22" rx="2" fill="white" stroke="#2A9D5C" stroke-width="1.2"/>
+        <rect x="56" y="100" width="6" height="6" fill="#2A9D5C"/>
+        <rect x="64" y="100" width="6" height="6" fill="#2A9D5C"/>
+        <rect x="56" y="108" width="6" height="6" fill="#2A9D5C"/>
+        <rect x="64" y="108" width="4" height="4" fill="#2A9D5C"/>
+        <!-- Person walking in -->
+        <circle cx="138" cy="92" r="6" fill="#2A9D5C" opacity="0.6"/>
+        <line x1="138" y1="98" x2="138" y2="112" stroke="#2A9D5C" stroke-width="2" opacity="0.6"/>
+        <line x1="138" y1="112" x2="133" y2="124" stroke="#2A9D5C" stroke-width="2" opacity="0.6"/>
+        <line x1="138" y1="112" x2="143" y2="124" stroke="#2A9D5C" stroke-width="2" opacity="0.6"/>
+        <!-- Wristband on wrist -->
+        <ellipse cx="130" cy="106" rx="6" ry="3.5" fill="none" stroke="#2A9D5C" stroke-width="2"/>
+        <!-- Wristband label -->
+        <rect x="46" y="130" width="62" height="20" rx="10" fill="#E8F5EE" stroke="#2A9D5C" stroke-width="1"/>
+        <text x="77" y="143" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="7" font-weight="600">Phone or band</text>
+        <!-- Check mark -->
+        <circle cx="155" cy="42" r="14" fill="#2A9D5C" opacity="0.12"/>
+        <path d="M148 42 L153 47 L163 37" stroke="#2A9D5C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">Arrival</div>
+      <h3>Walk in and you're checked in</h3>
+      <p>Donors with a phone scan a poster QR and confirm — they're in the queue instantly. Donors without a phone (or who'd rather not use one) get a wristband at the front desk that tracks their journey the same way. Either path, same experience. Walk-ins register in seconds.</p>
+      <div class="donor-feels">"I left my phone in the car — they just handed me a wristband and I was good to go."</div>
+    </div>
+  </div>
+
+  <!-- PANEL 3 — Waiting -->
+  <div class="panel" data-step="3">
+    <div class="panel-illustration">
+            <svg viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- PHONE (left side) -->
+        <rect x="10" y="18" width="72" height="104" rx="11" fill="#F0F7F2" stroke="#2A9D5C" stroke-width="2"/>
+        <rect x="17" y="30" width="58" height="80" rx="4" fill="white" stroke="#E2E8E4" stroke-width="1"/>
+        <circle cx="46" cy="24" r="1.5" fill="#2A9D5C" opacity="0.5"/>
+        <text x="46" y="46" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="6">Typical wait</text>
+        <text x="46" y="63" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="14" font-weight="700">15–25</text>
+        <text x="46" y="73" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="7">minutes</text>
+        <rect x="24" y="80" width="44" height="4" rx="2" fill="#E8F5EE"/>
+        <rect x="24" y="80" width="16" height="4" rx="2" fill="#2A9D5C"/>
+        <text x="46" y="96" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="5.5">You're in the queue</text>
+
+        <!-- "or" divider -->
+        <text x="98" y="78" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="10" font-weight="300">or</text>
+
+        <!-- === TWO TYVEK WRISTBANDS — one flat, one leaning === -->
+
+        <!-- BACK BAND — laying flat, seen from above as an ellipse -->
+        <!-- Outer ring -->
+        <ellipse cx="162" cy="128" rx="42" ry="16" fill="none" stroke="#B8DCC8" stroke-width="8"/>
+        <ellipse cx="162" cy="128" rx="42" ry="16" fill="none" stroke="#E8F5EE" stroke-width="6"/>
+        <!-- Green stripe on the flat band -->
+        <ellipse cx="162" cy="128" rx="42" ry="16" fill="none" stroke="#2A9D5C" stroke-width="2" opacity="0.5"/>
+        <!-- Inner visible opening — white to show hollow -->
+        <ellipse cx="162" cy="128" rx="36" ry="12" fill="#FAFCFB"/>
+        <!-- Subtle text on back band face -->
+        <text x="140" y="124" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="4.5" font-weight="600" opacity="0.5" transform="rotate(-6, 140, 124)">PULSE</text>
+        <!-- Wavy security lines on visible top surface -->
+        <path d="M130 133 Q136 131 142 133 Q148 135 154 133" stroke="#2A9D5C" stroke-width="0.5" fill="none" opacity="0.2"/>
+        <path d="M132 136 Q138 134 144 136 Q150 138 156 136" stroke="#2A9D5C" stroke-width="0.5" fill="none" opacity="0.2"/>
+
+        <!-- FRONT BAND — leaning upright against the back one, slightly tilted -->
+        <g transform="translate(134, 14) rotate(5, 40, 60)">
+          <!-- Band body — the visible face of the circular band flattened in perspective -->
+          <!-- Shadow -->
+          <ellipse cx="42" cy="58" rx="34" ry="52" fill="#000" opacity="0.03"/>
+          <!-- Outer band ring — paper-colored -->
+          <ellipse cx="40" cy="56" rx="32" ry="50" fill="#E8F5EE" stroke="#B8DCC8" stroke-width="1.5"/>
+          <!-- Top green stripe arc -->
+          <path d="M10 40 A32 50 0 0 1 70 40" fill="none" stroke="#2A9D5C" stroke-width="8"/>
+          <text x="40" y="20" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="7" font-weight="700" letter-spacing="1.5">PULSE</text>
+          <!-- Bottom green stripe arc -->
+          <path d="M10 72 A32 50 0 0 0 70 72" fill="none" stroke="#2A9D5C" stroke-width="7"/>
+          <text x="40" y="97" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="5" font-weight="600" letter-spacing="1">DONOR</text>
+          <!-- QR code area — white box on the face -->
+          <rect x="16" y="28" width="48" height="48" rx="2" fill="white" stroke="#B8DCC8" stroke-width="0.5"/>
+          <!-- Real QR code -->
+          <g transform="translate(18.5, 30.5) scale(1.72)">
+            <g fill="#1A1A2E">
+            <rect x="0" y="0" width="1" height="1"/>
+            <rect x="1" y="0" width="1" height="1"/>
+            <rect x="2" y="0" width="1" height="1"/>
+            <rect x="3" y="0" width="1" height="1"/>
+            <rect x="4" y="0" width="1" height="1"/>
+            <rect x="5" y="0" width="1" height="1"/>
+            <rect x="6" y="0" width="1" height="1"/>
+            <rect x="8" y="0" width="1" height="1"/>
+            <rect x="9" y="0" width="1" height="1"/>
+            <rect x="13" y="0" width="1" height="1"/>
+            <rect x="14" y="0" width="1" height="1"/>
+            <rect x="18" y="0" width="1" height="1"/>
+            <rect x="19" y="0" width="1" height="1"/>
+            <rect x="20" y="0" width="1" height="1"/>
+            <rect x="21" y="0" width="1" height="1"/>
+            <rect x="22" y="0" width="1" height="1"/>
+            <rect x="23" y="0" width="1" height="1"/>
+            <rect x="24" y="0" width="1" height="1"/>
+            <rect x="0" y="1" width="1" height="1"/>
+            <rect x="6" y="1" width="1" height="1"/>
+            <rect x="8" y="1" width="1" height="1"/>
+            <rect x="9" y="1" width="1" height="1"/>
+            <rect x="12" y="1" width="1" height="1"/>
+            <rect x="14" y="1" width="1" height="1"/>
+            <rect x="16" y="1" width="1" height="1"/>
+            <rect x="18" y="1" width="1" height="1"/>
+            <rect x="24" y="1" width="1" height="1"/>
+            <rect x="0" y="2" width="1" height="1"/>
+            <rect x="2" y="2" width="1" height="1"/>
+            <rect x="3" y="2" width="1" height="1"/>
+            <rect x="4" y="2" width="1" height="1"/>
+            <rect x="6" y="2" width="1" height="1"/>
+            <rect x="8" y="2" width="1" height="1"/>
+            <rect x="9" y="2" width="1" height="1"/>
+            <rect x="10" y="2" width="1" height="1"/>
+            <rect x="12" y="2" width="1" height="1"/>
+            <rect x="13" y="2" width="1" height="1"/>
+            <rect x="15" y="2" width="1" height="1"/>
+            <rect x="16" y="2" width="1" height="1"/>
+            <rect x="18" y="2" width="1" height="1"/>
+            <rect x="20" y="2" width="1" height="1"/>
+            <rect x="21" y="2" width="1" height="1"/>
+            <rect x="22" y="2" width="1" height="1"/>
+            <rect x="24" y="2" width="1" height="1"/>
+            <rect x="0" y="3" width="1" height="1"/>
+            <rect x="2" y="3" width="1" height="1"/>
+            <rect x="3" y="3" width="1" height="1"/>
+            <rect x="4" y="3" width="1" height="1"/>
+            <rect x="6" y="3" width="1" height="1"/>
+            <rect x="9" y="3" width="1" height="1"/>
+            <rect x="12" y="3" width="1" height="1"/>
+            <rect x="13" y="3" width="1" height="1"/>
+            <rect x="16" y="3" width="1" height="1"/>
+            <rect x="18" y="3" width="1" height="1"/>
+            <rect x="20" y="3" width="1" height="1"/>
+            <rect x="21" y="3" width="1" height="1"/>
+            <rect x="22" y="3" width="1" height="1"/>
+            <rect x="24" y="3" width="1" height="1"/>
+            <rect x="0" y="4" width="1" height="1"/>
+            <rect x="2" y="4" width="1" height="1"/>
+            <rect x="3" y="4" width="1" height="1"/>
+            <rect x="4" y="4" width="1" height="1"/>
+            <rect x="6" y="4" width="1" height="1"/>
+            <rect x="8" y="4" width="1" height="1"/>
+            <rect x="10" y="4" width="1" height="1"/>
+            <rect x="12" y="4" width="1" height="1"/>
+            <rect x="16" y="4" width="1" height="1"/>
+            <rect x="18" y="4" width="1" height="1"/>
+            <rect x="20" y="4" width="1" height="1"/>
+            <rect x="21" y="4" width="1" height="1"/>
+            <rect x="22" y="4" width="1" height="1"/>
+            <rect x="24" y="4" width="1" height="1"/>
+            <rect x="0" y="5" width="1" height="1"/>
+            <rect x="6" y="5" width="1" height="1"/>
+            <rect x="10" y="5" width="1" height="1"/>
+            <rect x="11" y="5" width="1" height="1"/>
+            <rect x="13" y="5" width="1" height="1"/>
+            <rect x="16" y="5" width="1" height="1"/>
+            <rect x="18" y="5" width="1" height="1"/>
+            <rect x="24" y="5" width="1" height="1"/>
+            <rect x="0" y="6" width="1" height="1"/>
+            <rect x="1" y="6" width="1" height="1"/>
+            <rect x="2" y="6" width="1" height="1"/>
+            <rect x="3" y="6" width="1" height="1"/>
+            <rect x="4" y="6" width="1" height="1"/>
+            <rect x="5" y="6" width="1" height="1"/>
+            <rect x="6" y="6" width="1" height="1"/>
+            <rect x="8" y="6" width="1" height="1"/>
+            <rect x="10" y="6" width="1" height="1"/>
+            <rect x="12" y="6" width="1" height="1"/>
+            <rect x="14" y="6" width="1" height="1"/>
+            <rect x="16" y="6" width="1" height="1"/>
+            <rect x="18" y="6" width="1" height="1"/>
+            <rect x="19" y="6" width="1" height="1"/>
+            <rect x="20" y="6" width="1" height="1"/>
+            <rect x="21" y="6" width="1" height="1"/>
+            <rect x="22" y="6" width="1" height="1"/>
+            <rect x="23" y="6" width="1" height="1"/>
+            <rect x="24" y="6" width="1" height="1"/>
+            <rect x="13" y="7" width="1" height="1"/>
+            <rect x="16" y="7" width="1" height="1"/>
+            <rect x="0" y="8" width="1" height="1"/>
+            <rect x="3" y="8" width="1" height="1"/>
+            <rect x="4" y="8" width="1" height="1"/>
+            <rect x="5" y="8" width="1" height="1"/>
+            <rect x="6" y="8" width="1" height="1"/>
+            <rect x="7" y="8" width="1" height="1"/>
+            <rect x="8" y="8" width="1" height="1"/>
+            <rect x="9" y="8" width="1" height="1"/>
+            <rect x="10" y="8" width="1" height="1"/>
+            <rect x="16" y="8" width="1" height="1"/>
+            <rect x="17" y="8" width="1" height="1"/>
+            <rect x="20" y="8" width="1" height="1"/>
+            <rect x="22" y="8" width="1" height="1"/>
+            <rect x="23" y="8" width="1" height="1"/>
+            <rect x="24" y="8" width="1" height="1"/>
+            <rect x="0" y="9" width="1" height="1"/>
+            <rect x="1" y="9" width="1" height="1"/>
+            <rect x="2" y="9" width="1" height="1"/>
+            <rect x="4" y="9" width="1" height="1"/>
+            <rect x="5" y="9" width="1" height="1"/>
+            <rect x="7" y="9" width="1" height="1"/>
+            <rect x="8" y="9" width="1" height="1"/>
+            <rect x="10" y="9" width="1" height="1"/>
+            <rect x="11" y="9" width="1" height="1"/>
+            <rect x="12" y="9" width="1" height="1"/>
+            <rect x="13" y="9" width="1" height="1"/>
+            <rect x="14" y="9" width="1" height="1"/>
+            <rect x="15" y="9" width="1" height="1"/>
+            <rect x="17" y="9" width="1" height="1"/>
+            <rect x="19" y="9" width="1" height="1"/>
+            <rect x="20" y="9" width="1" height="1"/>
+            <rect x="21" y="9" width="1" height="1"/>
+            <rect x="22" y="9" width="1" height="1"/>
+            <rect x="23" y="9" width="1" height="1"/>
+            <rect x="0" y="10" width="1" height="1"/>
+            <rect x="2" y="10" width="1" height="1"/>
+            <rect x="5" y="10" width="1" height="1"/>
+            <rect x="6" y="10" width="1" height="1"/>
+            <rect x="8" y="10" width="1" height="1"/>
+            <rect x="11" y="10" width="1" height="1"/>
+            <rect x="12" y="10" width="1" height="1"/>
+            <rect x="13" y="10" width="1" height="1"/>
+            <rect x="15" y="10" width="1" height="1"/>
+            <rect x="18" y="10" width="1" height="1"/>
+            <rect x="19" y="10" width="1" height="1"/>
+            <rect x="21" y="10" width="1" height="1"/>
+            <rect x="24" y="10" width="1" height="1"/>
+            <rect x="2" y="11" width="1" height="1"/>
+            <rect x="9" y="11" width="1" height="1"/>
+            <rect x="10" y="11" width="1" height="1"/>
+            <rect x="12" y="11" width="1" height="1"/>
+            <rect x="16" y="11" width="1" height="1"/>
+            <rect x="19" y="11" width="1" height="1"/>
+            <rect x="21" y="11" width="1" height="1"/>
+            <rect x="22" y="11" width="1" height="1"/>
+            <rect x="23" y="11" width="1" height="1"/>
+            <rect x="24" y="11" width="1" height="1"/>
+            <rect x="0" y="12" width="1" height="1"/>
+            <rect x="4" y="12" width="1" height="1"/>
+            <rect x="5" y="12" width="1" height="1"/>
+            <rect x="6" y="12" width="1" height="1"/>
+            <rect x="8" y="12" width="1" height="1"/>
+            <rect x="9" y="12" width="1" height="1"/>
+            <rect x="10" y="12" width="1" height="1"/>
+            <rect x="18" y="12" width="1" height="1"/>
+            <rect x="24" y="12" width="1" height="1"/>
+            <rect x="0" y="13" width="1" height="1"/>
+            <rect x="2" y="13" width="1" height="1"/>
+            <rect x="8" y="13" width="1" height="1"/>
+            <rect x="9" y="13" width="1" height="1"/>
+            <rect x="10" y="13" width="1" height="1"/>
+            <rect x="12" y="13" width="1" height="1"/>
+            <rect x="13" y="13" width="1" height="1"/>
+            <rect x="14" y="13" width="1" height="1"/>
+            <rect x="15" y="13" width="1" height="1"/>
+            <rect x="17" y="13" width="1" height="1"/>
+            <rect x="20" y="13" width="1" height="1"/>
+            <rect x="23" y="13" width="1" height="1"/>
+            <rect x="0" y="14" width="1" height="1"/>
+            <rect x="1" y="14" width="1" height="1"/>
+            <rect x="2" y="14" width="1" height="1"/>
+            <rect x="6" y="14" width="1" height="1"/>
+            <rect x="8" y="14" width="1" height="1"/>
+            <rect x="9" y="14" width="1" height="1"/>
+            <rect x="15" y="14" width="1" height="1"/>
+            <rect x="16" y="14" width="1" height="1"/>
+            <rect x="17" y="14" width="1" height="1"/>
+            <rect x="18" y="14" width="1" height="1"/>
+            <rect x="20" y="14" width="1" height="1"/>
+            <rect x="21" y="14" width="1" height="1"/>
+            <rect x="22" y="14" width="1" height="1"/>
+            <rect x="23" y="14" width="1" height="1"/>
+            <rect x="24" y="14" width="1" height="1"/>
+            <rect x="0" y="15" width="1" height="1"/>
+            <rect x="3" y="15" width="1" height="1"/>
+            <rect x="4" y="15" width="1" height="1"/>
+            <rect x="5" y="15" width="1" height="1"/>
+            <rect x="12" y="15" width="1" height="1"/>
+            <rect x="17" y="15" width="1" height="1"/>
+            <rect x="19" y="15" width="1" height="1"/>
+            <rect x="21" y="15" width="1" height="1"/>
+            <rect x="22" y="15" width="1" height="1"/>
+            <rect x="24" y="15" width="1" height="1"/>
+            <rect x="0" y="16" width="1" height="1"/>
+            <rect x="3" y="16" width="1" height="1"/>
+            <rect x="6" y="16" width="1" height="1"/>
+            <rect x="7" y="16" width="1" height="1"/>
+            <rect x="9" y="16" width="1" height="1"/>
+            <rect x="10" y="16" width="1" height="1"/>
+            <rect x="11" y="16" width="1" height="1"/>
+            <rect x="12" y="16" width="1" height="1"/>
+            <rect x="13" y="16" width="1" height="1"/>
+            <rect x="15" y="16" width="1" height="1"/>
+            <rect x="16" y="16" width="1" height="1"/>
+            <rect x="17" y="16" width="1" height="1"/>
+            <rect x="18" y="16" width="1" height="1"/>
+            <rect x="19" y="16" width="1" height="1"/>
+            <rect x="20" y="16" width="1" height="1"/>
+            <rect x="22" y="16" width="1" height="1"/>
+            <rect x="23" y="16" width="1" height="1"/>
+            <rect x="8" y="17" width="1" height="1"/>
+            <rect x="9" y="17" width="1" height="1"/>
+            <rect x="11" y="17" width="1" height="1"/>
+            <rect x="13" y="17" width="1" height="1"/>
+            <rect x="15" y="17" width="1" height="1"/>
+            <rect x="16" y="17" width="1" height="1"/>
+            <rect x="20" y="17" width="1" height="1"/>
+            <rect x="22" y="17" width="1" height="1"/>
+            <rect x="23" y="17" width="1" height="1"/>
+            <rect x="0" y="18" width="1" height="1"/>
+            <rect x="1" y="18" width="1" height="1"/>
+            <rect x="2" y="18" width="1" height="1"/>
+            <rect x="3" y="18" width="1" height="1"/>
+            <rect x="4" y="18" width="1" height="1"/>
+            <rect x="5" y="18" width="1" height="1"/>
+            <rect x="6" y="18" width="1" height="1"/>
+            <rect x="8" y="18" width="1" height="1"/>
+            <rect x="12" y="18" width="1" height="1"/>
+            <rect x="16" y="18" width="1" height="1"/>
+            <rect x="18" y="18" width="1" height="1"/>
+            <rect x="20" y="18" width="1" height="1"/>
+            <rect x="24" y="18" width="1" height="1"/>
+            <rect x="0" y="19" width="1" height="1"/>
+            <rect x="6" y="19" width="1" height="1"/>
+            <rect x="8" y="19" width="1" height="1"/>
+            <rect x="9" y="19" width="1" height="1"/>
+            <rect x="10" y="19" width="1" height="1"/>
+            <rect x="11" y="19" width="1" height="1"/>
+            <rect x="13" y="19" width="1" height="1"/>
+            <rect x="16" y="19" width="1" height="1"/>
+            <rect x="20" y="19" width="1" height="1"/>
+            <rect x="24" y="19" width="1" height="1"/>
+            <rect x="0" y="20" width="1" height="1"/>
+            <rect x="2" y="20" width="1" height="1"/>
+            <rect x="3" y="20" width="1" height="1"/>
+            <rect x="4" y="20" width="1" height="1"/>
+            <rect x="6" y="20" width="1" height="1"/>
+            <rect x="8" y="20" width="1" height="1"/>
+            <rect x="9" y="20" width="1" height="1"/>
+            <rect x="11" y="20" width="1" height="1"/>
+            <rect x="12" y="20" width="1" height="1"/>
+            <rect x="14" y="20" width="1" height="1"/>
+            <rect x="15" y="20" width="1" height="1"/>
+            <rect x="16" y="20" width="1" height="1"/>
+            <rect x="17" y="20" width="1" height="1"/>
+            <rect x="18" y="20" width="1" height="1"/>
+            <rect x="19" y="20" width="1" height="1"/>
+            <rect x="20" y="20" width="1" height="1"/>
+            <rect x="0" y="21" width="1" height="1"/>
+            <rect x="2" y="21" width="1" height="1"/>
+            <rect x="3" y="21" width="1" height="1"/>
+            <rect x="4" y="21" width="1" height="1"/>
+            <rect x="6" y="21" width="1" height="1"/>
+            <rect x="8" y="21" width="1" height="1"/>
+            <rect x="9" y="21" width="1" height="1"/>
+            <rect x="10" y="21" width="1" height="1"/>
+            <rect x="12" y="21" width="1" height="1"/>
+            <rect x="13" y="21" width="1" height="1"/>
+            <rect x="14" y="21" width="1" height="1"/>
+            <rect x="16" y="21" width="1" height="1"/>
+            <rect x="18" y="21" width="1" height="1"/>
+            <rect x="23" y="21" width="1" height="1"/>
+            <rect x="24" y="21" width="1" height="1"/>
+            <rect x="0" y="22" width="1" height="1"/>
+            <rect x="2" y="22" width="1" height="1"/>
+            <rect x="3" y="22" width="1" height="1"/>
+            <rect x="4" y="22" width="1" height="1"/>
+            <rect x="6" y="22" width="1" height="1"/>
+            <rect x="9" y="22" width="1" height="1"/>
+            <rect x="11" y="22" width="1" height="1"/>
+            <rect x="17" y="22" width="1" height="1"/>
+            <rect x="20" y="22" width="1" height="1"/>
+            <rect x="21" y="22" width="1" height="1"/>
+            <rect x="22" y="22" width="1" height="1"/>
+            <rect x="23" y="22" width="1" height="1"/>
+            <rect x="24" y="22" width="1" height="1"/>
+            <rect x="0" y="23" width="1" height="1"/>
+            <rect x="6" y="23" width="1" height="1"/>
+            <rect x="9" y="23" width="1" height="1"/>
+            <rect x="14" y="23" width="1" height="1"/>
+            <rect x="15" y="23" width="1" height="1"/>
+            <rect x="19" y="23" width="1" height="1"/>
+            <rect x="20" y="23" width="1" height="1"/>
+            <rect x="22" y="23" width="1" height="1"/>
+            <rect x="23" y="23" width="1" height="1"/>
+            <rect x="24" y="23" width="1" height="1"/>
+            <rect x="0" y="24" width="1" height="1"/>
+            <rect x="1" y="24" width="1" height="1"/>
+            <rect x="2" y="24" width="1" height="1"/>
+            <rect x="3" y="24" width="1" height="1"/>
+            <rect x="4" y="24" width="1" height="1"/>
+            <rect x="5" y="24" width="1" height="1"/>
+            <rect x="6" y="24" width="1" height="1"/>
+            <rect x="8" y="24" width="1" height="1"/>
+            <rect x="9" y="24" width="1" height="1"/>
+            <rect x="10" y="24" width="1" height="1"/>
+            <rect x="12" y="24" width="1" height="1"/>
+            <rect x="14" y="24" width="1" height="1"/>
+            <rect x="15" y="24" width="1" height="1"/>
+            <rect x="16" y="24" width="1" height="1"/>
+            <rect x="17" y="24" width="1" height="1"/>
+            <rect x="21" y="24" width="1" height="1"/>
+            <rect x="24" y="24" width="1" height="1"/>
+            </g>
+          </g>
+          <!-- Wavy security pattern below QR -->
+          <path d="M16 80 Q22 78 28 80 Q34 82 40 80 Q46 78 52 80" stroke="#2A9D5C" stroke-width="0.5" fill="none" opacity="0.25"/>
+          <path d="M18 83 Q24 81 30 83 Q36 85 42 83 Q48 81 54 83" stroke="#2A9D5C" stroke-width="0.5" fill="none" opacity="0.25"/>
+          <!-- Serial number -->
+          <text x="56" y="86" text-anchor="middle" fill="#2A9D5C" font-family="monospace" font-size="4" opacity="0.35">44801</text>
+          <!-- Inner opening of the band (visible at top) -->
+          <ellipse cx="40" cy="10" rx="24" ry="7" fill="#FAFCFB" stroke="#E2E8E4" stroke-width="0.5"/>
+        </g>
+
+        <!-- Label -->
+        <text x="163" y="160" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="6.5" font-weight="600">Paper QR Wristband</text>
+        <text x="163" y="172" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="5.5">No phone? No problem.</text>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">In the queue</div>
+      <h3>An honest wait, not a guessing game</h3>
+      <p>Donors with their phone see a live, self-updating wait range — realistic, not promised. If the estimate can't be confident, it gracefully falls back to a position count. Wristband-only donors stay visible in the queue and get called forward by staff the same way. Either path, nobody's forgotten.</p>
+      <div class="donor-feels">"I know roughly how long, so I can grab a coffee and come back."</div>
+    </div>
+  </div>
+
+  <!-- PANEL 4 — You're up -->
+  <div class="panel" data-step="4">
+    <div class="panel-illustration">
+      <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Notification burst -->
+        <circle cx="100" cy="80" r="50" fill="#2A9D5C" opacity="0.06"/>
+        <circle cx="100" cy="80" r="35" fill="#2A9D5C" opacity="0.1"/>
+        <circle cx="100" cy="80" r="22" fill="#2A9D5C" opacity="0.15"/>
+        <!-- Phone center -->
+        <rect x="80" y="56" width="40" height="48" rx="8" fill="white" stroke="#2A9D5C" stroke-width="2"/>
+        <!-- Check/go icon -->
+        <circle cx="100" cy="75" r="10" fill="#2A9D5C"/>
+        <path d="M95 75 L98 78 L106 70" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Pulse lines radiating -->
+        <path d="M58 65 Q70 60 75 68" stroke="#2A9D5C" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M50 80 Q62 78 68 80" stroke="#2A9D5C" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M142 65 Q130 60 125 68" stroke="#2A9D5C" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M150 80 Q138 78 132 80" stroke="#2A9D5C" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <!-- "You're up" text -->
+        <text x="100" y="40" text-anchor="middle" fill="#2A9D5C" font-family="Playfair Display,serif" font-size="14" font-weight="700">You're up</text>
+        <text x="100" y="126" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="8">Head to screening</text>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">Called forward</div>
+      <h3>One notification when it's actually your turn</h3>
+      <p>Pulse only sends this when the donor is cleared and a spot is genuinely ready — high confidence, no false calls. The donor walks up to something, not to a second wait.</p>
+      <div class="donor-feels">"They texted me exactly when to come up. No name shouted across the room."</div>
+    </div>
+  </div>
+
+  <!-- PANEL 5 — Donation -->
+  <div class="panel" data-step="5">
+    <div class="panel-illustration">
+      <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Recliner chair (simplified) -->
+        <path d="M50 110 L60 70 L80 60 L140 60 L155 75 L155 110" fill="#F0F7F2" stroke="#E2E8E4" stroke-width="1.5"/>
+        <ellipse cx="78" cy="60" rx="12" ry="10" fill="#E8F5EE" stroke="#2A9D5C" stroke-width="1.2"/>
+        <!-- Person reclining -->
+        <circle cx="78" cy="50" r="7" fill="#2A9D5C" opacity="0.4"/>
+        <!-- Drop icon / donation -->
+        <path d="M168 50 C168 50 158 70 158 78 C158 84 162.5 88 168 88 C173.5 88 178 84 178 78 C178 70 168 50 168 50Z" fill="#2A9D5C" opacity="0.2" stroke="#2A9D5C" stroke-width="1.5"/>
+        <!-- Calm phone screen -->
+        <rect x="42" y="118" width="36" height="26" rx="4" fill="white" stroke="#2A9D5C" stroke-width="1"/>
+        <text x="60" y="133" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="5.5">You're doing</text>
+        <text x="60" y="140" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="5.5" font-weight="600">great ♥</text>
+        <!-- Heart rate line -->
+        <path d="M95 100 L105 100 L110 90 L115 110 L120 95 L125 100 L145 100" stroke="#2A9D5C" stroke-width="1.5" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">In the chair</div>
+      <h3>A calm moment, not a clinical stare</h3>
+      <p>During the donation, the donor's phone becomes a quiet companion — optional, one-handed, supportive. Not entertainment, not medical. A gentle primer for what's next, including a preview of their recovery perk.</p>
+      <div class="donor-feels">"This is actually... kind of pleasant? And there's a perk waiting for me?"</div>
+    </div>
+  </div>
+
+  <!-- PANEL 6 — Cantina / Recovery -->
+  <div class="panel" data-step="6">
+    <div class="panel-illustration">
+      <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cantina table -->
+        <rect x="44" y="82" width="112" height="8" rx="3" fill="#E8F5EE" stroke="#2A9D5C" stroke-width="1.2"/>
+        <rect x="52" y="90" width="4" height="42" fill="#E2E8E4"/>
+        <rect x="144" y="90" width="4" height="42" fill="#E2E8E4"/>
+        <!-- Snack + drink -->
+        <rect x="62" y="68" width="18" height="14" rx="3" fill="#D4A574" opacity="0.3" stroke="#D4A574" stroke-width="1"/>
+        <path d="M106 68 L110 82 L98 82 L102 68 Z" fill="#D4A574" opacity="0.2" stroke="#D4A574" stroke-width="1"/>
+        <!-- Wristband tap moment -->
+        <circle cx="140" cy="56" r="20" fill="#2A9D5C" opacity="0.08"/>
+        <circle cx="140" cy="56" r="12" fill="#2A9D5C" opacity="0.15"/>
+        <!-- Wristband -->
+        <ellipse cx="140" cy="56" rx="8" ry="5" fill="none" stroke="#2A9D5C" stroke-width="2"/>
+        <!-- Scan lines -->
+        <path d="M154 48 L162 44" stroke="#2A9D5C" stroke-width="1" opacity="0.4"/>
+        <path d="M156 56 L164 56" stroke="#2A9D5C" stroke-width="1" opacity="0.4"/>
+        <path d="M154 64 L162 68" stroke="#2A9D5C" stroke-width="1" opacity="0.4"/>
+        <!-- Timer on phone -->
+        <rect x="54" y="34" width="32" height="28" rx="5" fill="white" stroke="#2A9D5C" stroke-width="1.2"/>
+        <text x="70" y="48" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="9" font-weight="700">12:34</text>
+        <text x="70" y="57" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="5">recovery</text>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">Recovery</div>
+      <h3>One tap — bed freed, timer started, perk unlocked</h3>
+      <p>At the snack area, the donor scans their wristband or taps on their phone. That single gesture frees their donation spot, starts the center's observation timer, and reveals a sponsor perk and a quick satisfaction survey. Phone or band — same tap, same result.</p>
+      <div class="donor-feels">"Free coffee from the place next door? And all I did was scan my wristband."</div>
+    </div>
+  </div>
+
+  <!-- PANEL 7 — After -->
+  <div class="panel" data-step="7">
+    <div class="panel-illustration">
+      <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Thank you card feel -->
+        <rect x="40" y="28" width="120" height="104" rx="10" fill="white" stroke="#E2E8E4" stroke-width="1.5"/>
+        <!-- Heart / milestone -->
+        <path d="M100 54 C100 54 88 42 78 50 C68 58 78 72 100 86 C122 72 132 58 122 50 C112 42 100 54 100 54Z" fill="#2A9D5C" opacity="0.15" stroke="#2A9D5C" stroke-width="1.5"/>
+        <!-- Star milestone marker -->
+        <text x="100" y="74" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="10" font-weight="700">5th</text>
+        <text x="100" y="84" text-anchor="middle" fill="#2A9D5C" font-family="Inter,sans-serif" font-size="6">donation</text>
+        <!-- Follow-up text bubble -->
+        <rect x="56" y="100" width="88" height="22" rx="6" fill="#E8F5EE"/>
+        <text x="100" y="114" text-anchor="middle" fill="#1E7A45" font-family="Inter,sans-serif" font-size="7">How are you feeling today?</text>
+        <!-- Outgoing arrow -->
+        <path d="M100 134 L100 148" stroke="#2A9D5C" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+        <path d="M95 143 L100 148 L105 143" stroke="#2A9D5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="panel-content">
+      <div class="moment-label">After departure</div>
+      <h3>The visit ends, the care doesn't</h3>
+      <p>Thank-you, milestone recognition, and an easy path to rebook. Then, wellness check-ins go out by text — a simple "how are you feeling?" If anything's off, your team gets a callback prompt. Every touchpoint is documented.</p>
+      <div class="donor-feels">"They actually checked in on me the next day. That's... really thoughtful."</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="tagline">One loop. Every donor. Documented.</div>
+  <div class="brand"><strong>PULSE</strong> &nbsp;&middot;&nbsp; A product of 448 Labs</div>
+</div>
+
+</body>
+</html>
+
 PULSE  ·  A product of 448 Labs
