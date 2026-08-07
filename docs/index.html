@@ -30,7 +30,16 @@
     -webkit-font-smoothing: antialiased;
     position: relative;
   }
-  .header, .storyboard, .footer { position: relative; z-index: 1; }
+  .header, .storyboard, .footer, .topnav { position: relative; z-index: 1; }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    padding: 24px 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .logo-link { display: inline-block; }
+  .logo-img { height: 32px; width: auto; }
 
   /* ── FLOATING PARTICLES ── */
   .particles {
@@ -62,13 +71,44 @@
     padding: 60px 40px 40px;
     background: linear-gradient(180deg, var(--pulse-green-light) 0%, var(--bg) 100%);
   }
-  .header .eyebrow {
+  .header .capsule {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 50px;
+    border: 1.5px solid #2A3A50;
+    font-size: 14px;
+    font-weight: 500;
+    color: #9CA3AF;
+    margin-bottom: 12px;
+    background: rgba(17, 24, 39, 0.6);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Green arc highlight on the left edge */
+  .header .capsule::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 10%;
+    bottom: 10%;
+    width: 3px;
+    border-radius: 3px;
+    background: #34D399;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+  }
+  .header .capsule-highlight {
+    font-weight: 700;
+    color: #34D399;
+    margin-right: 6px;
+  }
+  .header .capsule-subtitle {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--pulse-green);
     margin-bottom: 16px;
+    margin-top: 12px;
   }
   .header h1 {
     font-family: 'Playfair Display', serif;
@@ -282,8 +322,15 @@
 })();
 </script>
 
+<nav class="topnav">
+  <a href="https://www.448labs.com/" class="logo-link">
+    <img src="https://www.448labs.com/images/448_labs.svg" alt="448 Labs" class="logo-img" />
+  </a>
+</nav>
+
 <div class="header">
-  <div class="eyebrow">Pulse &middot; Donor Journey</div>
+  <div class="capsule"><span class="capsule-highlight">Pulse</span> In-Center Operations</div>
+  <div class="capsule-subtitle">Donor Journey</div>
   <h1>Every visit, <span>one smooth loop.</span></h1>
   <p class="subtitle">From the first text to the thank-you — here's what the donor experience looks like with a phone, a wristband, or both. Zero friction, full visibility.</p>
 </div>
@@ -839,7 +886,7 @@
         <path d="M154 64 L162 68" stroke="#5B9CF5" stroke-width="1" opacity="0.4"/>
         <!-- Timer on phone -->
         <rect x="54" y="34" width="32" height="28" rx="5" fill="#1A2332" stroke="#5B9CF5" stroke-width="1.2"/>
-        <text x="70" y="48" text-anchor="middle" fill="#5B9CF5" font-family="Inter,sans-serif" font-size="9" font-weight="700">12:34</text>
+        <text x="70" y="48" text-anchor="middle" fill="#5B9CF5" font-family="Inter,sans-serif" font-size="8" font-weight="700">4:48PM</text>
         <text x="70" y="57" text-anchor="middle" fill="#6B6B80" font-family="Inter,sans-serif" font-size="5">recovery</text>
       </svg>
     </div>
