@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse — 448 Labs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+  :root {
+    --accent: #5B9CF5;
+    --accent-dark: #3B82F6;
+    --accent-green: #34D399;
+
+    --bg: #0A0E17;
+    --card-bg: #111827;
+    --card-bg-hover: #1A2332;
+    --surface: #141924;
+
+    --text-primary: #FFFFFF;
+    --text-secondary: #D1D5DB;
+    --text-muted: #9CA3AF;
+    --text-dim: #6B7280;
+
+    --divider: #1E293B;
+    --divider-soft: rgba(30, 41, 59, 0.3);
+    --border-capsule: #2A3A50;
+
+    --svg-fill: #1A2332;
+    --svg-stroke: #1E293B;
+    --svg-stroke-accent: #2D4A7A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .topnav, .content, .footer { position: relative; z-index: 1; }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    padding: 24px 40px;
+  }
+  .logo-link { display: inline-block; text-decoration: none; }
+  .logo-img { height: 32px; width: auto; }
+  .logo-mark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+  }
+  .logo-mark .logo-448 { color: var(--accent); }
+  .logo-mark .logo-labs {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* ── PARTICLES ── */
+  .particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    bottom: -10px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(91, 156, 245, 0.35);
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0);      opacity: 0; }
+    10%  {                                 opacity: 1; }
+    90%  {                                 opacity: 1; }
+    100% { transform: translateY(-110vh);  opacity: 0; }
+  }
+
+  /* ── CAPSULE ── */
+  .capsule {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 50px;
+    border: 1.5px solid var(--border-capsule);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(17, 24, 39, 0.6);
+    position: relative;
+    overflow: hidden;
+  }
+  .capsule::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 10%;
+    bottom: 10%;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent-green);
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+  }
+  .capsule-highlight {
+    font-weight: 700;
+    color: var(--accent-green);
+    margin-right: 6px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .heading-xl {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+  }
+  .heading-xl .highlight { color: var(--accent); }
+
+  .heading-lg {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .heading-md {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .body-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .label-spaced {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ── CARD ── */
+  .card {
+    padding: 28px 32px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    border: 1px solid var(--divider);
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+  .content.wide { max-width: 1200px; }
+  .content.narrow { max-width: 720px; }
+
+  .section-header {
+    text-align: center;
+    padding: 40px 40px 40px;
+  }
+
+  .page-section {
+    padding: 70px 0;
+    border-top: 1px solid var(--divider-soft);
+  }
+  .page-section:first-of-type { border-top: none; }
+
+  .section-eyebrow {
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .section-intro {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 40px;
+  }
+
+  /* ── GRIDS ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .icon-badge {
+    font-size: 22px;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+
+  .check-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(52, 211, 153, 0.12);
+    color: var(--accent-green);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  /* ── DONOR JOURNEY TIMELINE ── */
+  .journey-track {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 8px 0 44px;
+    position: relative;
+  }
+  .journey-track::before {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 4%;
+    right: 4%;
+    height: 1px;
+    background: var(--divider);
+    z-index: 0;
+  }
+  .journey-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .journey-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .journey-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    max-width: 90px;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .compare-table th, .compare-table td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--divider);
+  }
+  .compare-table th:first-child, .compare-table td:first-child {
+    text-align: left;
+    color: var(--text-secondary);
+  }
+  .compare-table thead th {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-muted);
+    padding-bottom: 18px;
+  }
+  .compare-table thead th.pulse-col {
+    color: var(--text-primary);
+    background: var(--card-bg-hover);
+    border-radius: 10px 10px 0 0;
+  }
+  .compare-table td.pulse-col {
+    background: var(--card-bg-hover);
+  }
+  .compare-table tbody tr:last-child td.pulse-col {
+    border-radius: 0 0 10px 10px;
+  }
+  .yes { color: var(--accent-green); font-weight: 700; }
+  .no { color: var(--text-dim); }
+  .partial { color: var(--text-muted); font-size: 13px; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    text-align: center;
+    padding: 60px 0 20px;
+  }
+  .cta-email {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 18px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .cta-email:hover { color: var(--accent-dark); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--divider-soft);
+    margin-top: 20px;
+  }
+  .footer .tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .footer .brand {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+  .footer .brand strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .topnav { padding: 16px 20px; }
+    .section-header { padding: 30px 20px 30px; }
+    .content { padding: 16px 16px 40px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr; }
+    .journey-track { flex-wrap: wrap; }
+    .journey-track::before { display: none; }
+    .journey-step { flex: 0 0 25%; margin-bottom: 20px; }
+    .compare-table { font-size: 12px; }
+    .compare-table th, .compare-table td { padding: 10px 6px; }
+  }
+
+  @media print {
+    body { background: white; color: #1A1A2E; }
+    .particles { display: none; }
+    .card { box-shadow: none; border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+<script>
+(function() {
+  var container = document.getElementById('particles');
+  var cols = 20;
+  for (var i = 0; i < cols; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'particle';
+    var left = (i / cols * 100) + (Math.random() * (100 / cols));
+    var duration = 16 + Math.random() * 4;
+    var delay = Math.random() * duration;
+    var size = 2 + Math.random() * 2;
+    var opacity = 0.2 + Math.random() * 0.3;
+    dot.style.left = left + '%';
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.animationDuration = duration + 's';
+    dot.style.animationDelay = '-' + delay + 's';
+    dot.style.background = 'rgba(91, 156, 245, ' + opacity + ')';
+    container.appendChild(dot);
+  }
+})();
+</script>
+
+<nav class="topnav" style="display:flex; align-items:center; justify-content:space-between;">
+  <a href="https://www.448labs.com/" class="logo-link">
+    <span class="logo-mark"><span class="logo-448">448</span><span class="logo-labs">Labs</span></span>
+  </a>
+  <a href="index.html" style="font-size:13px; font-weight:600; color: var(--text-muted); text-decoration:none; letter-spacing:0.5px;">Donor Journey →</a>
+</nav>
+
+<!-- ══ HERO (Slide 1) ══ -->
+<div class="section-header">
+  <div class="capsule"><span class="capsule-highlight">Pulse</span> In-Center Operations</div>
+  <div class="label-spaced" style="margin-top: 16px; margin-bottom: 16px;">The Pulse of Every Donation</div>
+  <h1 class="heading-xl">Queue management, donor experience, and <span class="highlight">recovery assurance</span></h1>
+  <p class="subtitle" style="margin: 16px auto 0;">for community blood centers.</p>
+</div>
+
+<main class="content">
+
+  <!-- ══ THE PROBLEM (Slide 2) ══ -->
+  <section class="page-section">
+    <div class="section-eyebrow label-spaced">The Problem</div>
+    <h2 class="heading-lg section-title" style="text-align:center;">Full visibility, from check-in to check-out.</h2>
+
+    <div class="grid-2" style="margin-top: 36px;">
+      <div class="card">
+        <span class="icon-badge">⏳</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Blind Before &amp; After</h3>
+        <p class="body-text">Centers have strong visibility during donation — almost none into what happens in the lobby or after the donor leaves.</p>
+      </div>
+      <div class="card">
+        <span class="icon-badge">📋</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">No Recovery Documentation</h3>
+        <p class="body-text">Post-donation adverse events (vasovagal reactions) are the #1 source of donor complaints and liability — and most go untracked.</p>
+      </div>
+      <div class="card">
+        <span class="icon-badge">🚪</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Walkouts &amp; No-Shows</h3>
+        <p class="body-text">Donors wait without information, leave without telling anyone, and don't come back. Centers have no real-time flow tools.</p>
+      </div>
+      <div class="card">
+        <span class="icon-badge">🔧</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Legacy Systems</h3>
+        <p class="body-text">Existing donor management systems handle clinical records well but don't touch operational flow, experience, or post-visit care.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE SOLUTION (Slide 3) ══ -->
+  <section class="page-section">
+    <div class="section-eyebrow label-spaced">The Solution</div>
+    <h2 class="heading-lg section-title" style="text-align:center;">The operational loop of a blood drive, run automatically.</h2>
+    <p class="body-text section-intro">Pulse runs check-in, screening, donation, recovery, and follow-up — giving centers real-time floor visibility while building a documented chain of care for every donor, automatically.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="label" style="margin-bottom: 8px;">Web-Only, Text-Driven</div>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Real-Time Queue Visibility</h3>
+        <p class="body-text">Donors interact through a branded text link. No app download, no hardware burden. Honest wait estimates, live pipeline status, and automated donor notifications.</p>
+      </div>
+      <div class="card">
+        <div class="label" style="margin-bottom: 8px;">Recovery Assurance</div>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Operational Intelligence</h3>
+        <p class="body-text">Tracked observation windows, wellness follow-ups, and exportable duty-of-care records. Signal-driven state inference — staff run the floor, the system captures what's happening.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE DONOR JOURNEY (Slide 4) ══ -->
+  <section class="page-section">
+    <div class="section-eyebrow label-spaced">The Donor Journey</div>
+    <h2 class="heading-lg section-title" style="text-align:center;">Seven touchpoints. Zero app downloads. One documented visit.</h2>
+
+    <div class="journey-track" style="margin-top: 40px;">
+      <div class="journey-step"><div class="journey-num">1</div><div class="journey-label">Text Notification</div></div>
+      <div class="journey-step"><div class="journey-num">2</div><div class="journey-label">Check-In (QR / Band)</div></div>
+      <div class="journey-step"><div class="journey-num">3</div><div class="journey-label">Queue &amp; Wait Estimate</div></div>
+      <div class="journey-step"><div class="journey-num">4</div><div class="journey-label">You're Up</div></div>
+      <div class="journey-step"><div class="journey-num">5</div><div class="journey-label">In-Chair Companion</div></div>
+      <div class="journey-step"><div class="journey-num">6</div><div class="journey-label">Recovery &amp; Perk</div></div>
+      <div class="journey-step"><div class="journey-num">7</div><div class="journey-label">Wellness Follow-Up</div></div>
+    </div>
+
+    <div class="grid-4" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card">
+        <h3 class="heading-md" style="margin-bottom: 8px; font-size:17px;">Phone or Wristband</h3>
+        <p class="body-text">Donors without a phone get a paper QR wristband — same journey, same data.</p>
+      </div>
+      <div class="card">
+        <h3 class="heading-md" style="margin-bottom: 8px; font-size:17px;">No Staff Data Entry</h3>
+        <p class="body-text">Signals fall out of behavior people already do. Staff run the floor, not a screen.</p>
+      </div>
+      <div class="card">
+        <h3 class="heading-md" style="margin-bottom: 8px; font-size:17px;">Documented Chain of Care</h3>
+        <p class="body-text">Every visit produces an exportable record for compliance, counsel, or insurer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ RECOVERY ASSURANCE (Slide 5) ══ -->
+  <section class="page-section">
+    <div class="section-eyebrow label-spaced">Recovery Assurance</div>
+    <h2 class="heading-lg section-title" style="text-align:center;">A risk &amp; compliance product with donor experience baked in.</h2>
+    <p class="body-text section-intro">The industry's most common adverse event — vasovagal reactions — often presents after the donor leaves. Centers usually learn about it only when the donor calls to complain. Pulse closes that gap as a byproduct of running the drive.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="check-badge">✓</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Observation Window Tracked</h3>
+        <p class="body-text">Wristband tap-in/tap-out documents whether the donor stayed the center's recommended period.</p>
+      </div>
+      <div class="card">
+        <span class="check-badge">✓</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Early Exit Flagged</h3>
+        <p class="body-text">Donors who leave early trigger a staff alert and an acknowledgment record.</p>
+      </div>
+      <div class="card">
+        <span class="check-badge">✓</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Wellness Follow-Up</h3>
+        <p class="body-text">Automated post-departure check-ins by text. Negative replies route to a human callback worklist.</p>
+      </div>
+      <div class="card">
+        <span class="check-badge">✓</span>
+        <h3 class="heading-md" style="margin-bottom: 8px;">Exportable Record</h3>
+        <p class="body-text">Per-donor documented chain of care for counsel, insurer, or compliance audit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHY NOT EXISTING TOOLS (Slide 6) ══ -->
+  <section class="page-section">
+    <div class="section-eyebrow label-spaced">Why Not Existing Tools?</div>
+    <h2 class="heading-lg section-title" style="text-align:center; margin-bottom: 36px;">Built for the floor, not just the file.</h2>
+
+    <div class="card" style="padding: 8px 24px 0;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Existing DMS</th>
+            <th>General Queue Software</th>
+            <th class="pulse-col">Pulse</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Built for blood centers</td>
+            <td><span class="yes">✓</span></td>
+            <td><span class="no">✗</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Real-time floor visibility</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="partial">Partial</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Donor mobile experience</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Recovery documentation</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Post-departure follow-up</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>No app download</td>
+            <td><span class="partial">N/A</span></td>
+            <td><span class="partial">Varies</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Sponsor integration</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td class="pulse-col"><span class="yes">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══ LET'S TALK (Slide 7) ══ -->
+  <section class="cta-section">
+    <div class="label-spaced" style="margin-bottom: 16px;">Let's Talk</div>
+    <h2 class="heading-xl">Purpose-built for community <span class="highlight">blood centers.</span></h2>
+    <p class="subtitle" style="margin: 16px auto 0; text-align:center;">Operational, in pilot, and ready to scale.</p>
+    <a href="mailto:hello@448labs.com" class="cta-email">hello@448labs.com</a>
+  </section>
+
+</main>
+
+<div class="footer">
+  <div class="tagline">Operational Intelligence for Donor Centers</div>
+  <div class="brand"><strong>PULSE</strong> &nbsp;&middot;&nbsp; A product of 448 Labs</div>
+</div>
+
+</body>
+</html>
