@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>448 Labs — [Page Title]</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+  /* ══════════════════════════════════════════
+     448 LABS DARK THEME — SEED TEMPLATE
+     ══════════════════════════════════════════
+     Source of truth for colors, typography,
+     particles, nav, capsule, and footer.
+     Copy this file and add your content
+     inside <main class="content">.
+     ══════════════════════════════════════════ */
+
+  :root {
+    /* ── BRAND COLORS ── */
+    --accent: #5B9CF5;           /* Primary blue (headings, links, highlights) */
+    --accent-dark: #3B82F6;      /* Deeper blue (buttons, strong accents) */
+    --accent-green: #34D399;     /* Green (capsule highlight, selected state) */
+
+    /* ── BACKGROUNDS ── */
+    --bg: #0A0E17;               /* Page background (matches 448labs.com) */
+    --card-bg: #111827;          /* Card / panel background */
+    --card-bg-hover: #1A2332;    /* Card hover / SVG illustration fill */
+    --surface: #141924;          /* Slightly lighter surface for contrast */
+
+    /* ── TEXT ── */
+    --text-primary: #FFFFFF;     /* Headings, bold text */
+    --text-secondary: #D1D5DB;   /* Body text on dark backgrounds */
+    --text-muted: #9CA3AF;       /* Captions, subtitles, soft labels */
+    --text-dim: #6B7280;         /* Footers, metadata */
+
+    /* ── BORDERS & DIVIDERS ── */
+    --divider: #1E293B;          /* Card borders, subtle lines */
+    --divider-soft: rgba(30, 41, 59, 0.3);  /* Very subtle separators */
+    --border-capsule: #2A3A50;   /* Capsule pill border */
+
+    /* ── SVG ILLUSTRATION PALETTE ── */
+    --svg-fill: #1A2332;         /* Shape fills inside illustrations */
+    --svg-stroke: #1E293B;       /* Subtle strokes */
+    --svg-stroke-accent: #2D4A7A; /* Medium-emphasis strokes */
+  }
+
+  /* ── RESET ── */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* ── Z-INDEX LAYERS ── */
+  /* Particles sit at z:0, everything else at z:1+ */
+  .topnav, .content, .footer { position: relative; z-index: 1; }
+
+
+  /* ═══════════════════════════════════════
+     TOP NAVIGATION
+     ═══════════════════════════════════════ */
+  .topnav {
+    padding: 24px 40px;
+  }
+  .logo-link { display: inline-block; }
+  .logo-img { height: 32px; width: auto; }
+
+
+  /* ═══════════════════════════════════════
+     FLOATING PARTICLES
+     Light blue dots rising from bottom to top.
+     20 columns, 16-20s random speed, staggered.
+     ═══════════════════════════════════════ */
+  .particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    bottom: -10px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(91, 156, 245, 0.35);
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0);      opacity: 0; }
+    10%  {                                 opacity: 1; }
+    90%  {                                 opacity: 1; }
+    100% { transform: translateY(-110vh);  opacity: 0; }
+  }
+
+
+  /* ═══════════════════════════════════════
+     CAPSULE PILL (product selector)
+     Use: <div class="capsule">
+            <span class="capsule-highlight">Pulse</span>
+            In-Center Operations
+          </div>
+     ═══════════════════════════════════════ */
+  .capsule {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 50px;
+    border: 1.5px solid var(--border-capsule);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(17, 24, 39, 0.6);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Green arc highlight on the left edge */
+  .capsule::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 10%;
+    bottom: 10%;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent-green);
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+  }
+  .capsule-highlight {
+    font-weight: 700;
+    color: var(--accent-green);
+    margin-right: 6px;
+  }
+
+
+  /* ═══════════════════════════════════════
+     TYPOGRAPHY UTILITIES
+     ═══════════════════════════════════════ */
+  .heading-xl {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+  }
+  .heading-xl .highlight { color: var(--accent); }
+
+  .heading-lg {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .heading-md {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .body-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .label-spaced {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+
+  /* ═══════════════════════════════════════
+     CARD
+     Use: <div class="card">...</div>
+     ═══════════════════════════════════════ */
+  .card {
+    padding: 28px 32px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    border: 1px solid var(--divider);
+  }
+
+
+  /* ═══════════════════════════════════════
+     CONTENT AREA
+     Wrap your page content in:
+     <main class="content">...</main>
+     ═══════════════════════════════════════ */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+  .content.wide { max-width: 1200px; }
+  .content.narrow { max-width: 720px; }
+
+  .section-header {
+    text-align: center;
+    padding: 40px 40px 40px;
+  }
+
+
+  /* ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--divider-soft);
+    margin-top: 20px;
+  }
+  .footer .tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .footer .brand {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+  .footer .brand strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .topnav { padding: 16px 20px; }
+    .section-header { padding: 30px 20px 30px; }
+    .content { padding: 16px 16px 40px; }
+  }
+
+  /* ═══════════════════════════════════════
+     PRINT — hide particles, lighten bg
+     ═══════════════════════════════════════ */
+  @media print {
+    body { background: white; color: #1A1A2E; }
+    .particles { display: none; }
+    .card { box-shadow: none; border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── FLOATING PARTICLES ── -->
+<div class="particles" id="particles"></div>
+<script>
+(function() {
+  var container = document.getElementById('particles');
+  var cols = 20;
+  for (var i = 0; i < cols; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'particle';
+    var left = (i / cols * 100) + (Math.random() * (100 / cols));
+    var duration = 16 + Math.random() * 4;
+    var delay = Math.random() * duration;
+    var size = 2 + Math.random() * 2;
+    var opacity = 0.2 + Math.random() * 0.3;
+    dot.style.left = left + '%';
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.animationDuration = duration + 's';
+    dot.style.animationDelay = '-' + delay + 's';
+    dot.style.background = 'rgba(91, 156, 245, ' + opacity + ')';
+    container.appendChild(dot);
+  }
+})();
+</script>
+
+<!-- ── TOP NAV ── -->
+<nav class="topnav">
+  <a href="https://www.448labs.com/" class="logo-link">
+    <img src="https://www.448labs.com/images/448_labs.svg" alt="448 Labs" class="logo-img" />
+  </a>
+</nav>
+
+<!-- ── PAGE HEADER ── -->
+<div class="section-header">
+  <!-- Capsule: change the product name and subtitle as needed -->
+  <div class="capsule"><span class="capsule-highlight">Pulse</span> In-Center Operations</div>
+  <div class="label-spaced" style="margin-top: 12px; margin-bottom: 16px;">Page Title Here</div>
+  <h1 class="heading-xl">Your headline <span class="highlight">goes here.</span></h1>
+  <p class="subtitle" style="margin: 16px auto 0;">Your subtitle or introductory text goes here. Keep it to 1-2 sentences.</p>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="content">
+
+  <!-- EXAMPLE: Card -->
+  <div class="card" style="margin-bottom: 20px;">
+    <div class="label" style="margin-bottom: 8px;">Section Label</div>
+    <h3 class="heading-md" style="margin-bottom: 8px;">Card Heading</h3>
+    <p class="body-text">Card body text goes here. Use the .card class for any content block that needs a contained, elevated look against the dark background.</p>
+  </div>
+
+  <!-- EXAMPLE: Two-column cards -->
+  <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <div class="card" style="flex: 1; min-width: 280px;">
+      <div class="label" style="margin-bottom: 8px;">Feature One</div>
+      <h3 class="heading-md" style="margin-bottom: 8px;">Title</h3>
+      <p class="body-text">Description text.</p>
+    </div>
+    <div class="card" style="flex: 1; min-width: 280px;">
+      <div class="label" style="margin-bottom: 8px;">Feature Two</div>
+      <h3 class="heading-md" style="margin-bottom: 8px;">Title</h3>
+      <p class="body-text">Description text.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div class="tagline">Your closing line here.</div>
+  <div class="brand"><strong>PULSE</strong> &nbsp;&middot;&nbsp; A product of 448 Labs</div>
+</div>
+
+</body>
+</html>
