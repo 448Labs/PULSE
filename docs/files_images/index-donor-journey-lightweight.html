@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse — The Donor Journey</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+  :root {
+    --accent: #5B9CF5;
+    --accent-dark: #3B82F6;
+    --accent-green: #34D399;
+    --bg: #0A0E17;
+    --card-bg: #111827;
+    --card-bg-hover: #1A2332;
+    --surface: #141924;
+    --text-primary: #FFFFFF;
+    --text-secondary: #D1D5DB;
+    --text-muted: #9CA3AF;
+    --text-dim: #6B7280;
+    --divider: #1E293B;
+    --divider-soft: rgba(30, 41, 59, 0.3);
+    --border-capsule: #2A3A50;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .topnav, .content, .footer { position: relative; z-index: 1; }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    padding: 24px 40px;
+  }
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark svg { width: 32px; height: 32px; flex-shrink: 0; }
+  .logo-mark .logo-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .logo-mark .logo-labs { color: var(--accent); font-weight: 600; }
+
+  /* ── PARTICLES ── */
+  .particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    bottom: -10px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(91, 156, 245, 0.35);
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0);      opacity: 0; }
+    10%  {                                 opacity: 1; }
+    90%  {                                 opacity: 1; }
+    100% { transform: translateY(-110vh);  opacity: 0; }
+  }
+
+  /* ── CAPSULE ── */
+  .capsule {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 50px;
+    border: 1.5px solid var(--border-capsule);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(17, 24, 39, 0.6);
+    position: relative;
+    overflow: hidden;
+  }
+  .capsule::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 10%;
+    bottom: 10%;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent-green);
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+  }
+  .capsule-highlight {
+    font-weight: 700;
+    color: var(--accent-green);
+    margin-right: 6px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .heading-xl {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+  }
+  .heading-xl .highlight { color: var(--accent); }
+
+  .subtitle {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .label-spaced {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+  .section-header {
+    text-align: center;
+    padding: 40px 40px 60px;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: var(--divider);
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+
+  .step-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    margin-bottom: 72px;
+    z-index: 1;
+  }
+  .step-row:last-child { margin-bottom: 0; }
+  .step-row:nth-child(even) { flex-direction: row-reverse; }
+
+  .num-marker {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+    z-index: 2;
+    box-shadow: 0 0 0 6px var(--bg);
+  }
+
+  .step-photo { flex: 1; }
+  .step-photo img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--divider);
+    display: block;
+  }
+
+  .step-text { flex: 1; }
+  .step-row:nth-child(odd) .step-text { text-align: left; padding-left: 12px; }
+  .step-row:nth-child(even) .step-text { text-align: right; padding-right: 12px; }
+
+  .step-text .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .step-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+  }
+  .step-text p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    max-width: 380px;
+  }
+  .step-row:nth-child(even) .step-text p { margin-left: auto; }
+
+  /* ── CLOSING ── */
+  .closing {
+    text-align: center;
+    padding: 60px 0 0;
+  }
+  .closing p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--text-primary);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--divider-soft);
+    margin-top: 40px;
+  }
+  .footer .brand {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+  .footer .brand strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .topnav { padding: 16px 20px; display:flex; align-items:center; justify-content:space-between; }
+    .section-header { padding: 30px 20px 40px; }
+    .content { padding: 16px 16px 40px; }
+
+    .timeline::before { left: 24px; }
+    .step-row, .step-row:nth-child(even) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding-left: 56px;
+    }
+    .num-marker { left: 24px; top: 0; transform: translate(-50%, 0); }
+    .step-row:nth-child(odd) .step-text,
+    .step-row:nth-child(even) .step-text {
+      text-align: left;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .step-row:nth-child(even) .step-text p { margin-left: 0; }
+    .step-text p { max-width: none; }
+  }
+
+  @media print {
+    body { background: white; color: #1A1A2E; }
+    .particles { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+<script>
+(function() {
+  var container = document.getElementById('particles');
+  var cols = 20;
+  for (var i = 0; i < cols; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'particle';
+    var left = (i / cols * 100) + (Math.random() * (100 / cols));
+    var duration = 16 + Math.random() * 4;
+    var delay = Math.random() * duration;
+    var size = 2 + Math.random() * 2;
+    var opacity = 0.2 + Math.random() * 0.3;
+    dot.style.left = left + '%';
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.animationDuration = duration + 's';
+    dot.style.animationDelay = '-' + delay + 's';
+    dot.style.background = 'rgba(91, 156, 245, ' + opacity + ')';
+    container.appendChild(dot);
+  }
+})();
+</script>
+
+<nav class="topnav" style="display:flex; align-items:center; justify-content:space-between;">
+  <a href="https://www.448labs.com/" style="text-decoration:none;">
+    <span class="logo-mark">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#5B9CF5" stroke-width="1.6" stroke-linecap="round">
+          <line x1="16" y1="4" x2="16" y2="28"/>
+          <line x1="4" y1="16" x2="26" y2="16"/>
+          <line x1="7.5" y1="7.5" x2="24.5" y2="24.5"/>
+          <line x1="24.5" y1="7.5" x2="7.5" y2="24.5"/>
+        </g>
+        <circle cx="28" cy="16" r="2" fill="none" stroke="#5B9CF5" stroke-width="1.6"/>
+      </svg>
+      <span class="logo-text">448 <span class="logo-labs">Labs</span></span>
+    </span>
+  </a>
+  <a href="pulse-overview.html" style="font-size:13px; font-weight:600; color: #9CA3AF; text-decoration:none; letter-spacing:0.5px;">Overview →</a>
+</nav>
+
+<div class="section-header">
+  <div class="capsule"><span class="capsule-highlight">Pulse</span> In-Center Operations</div>
+  <div class="label-spaced" style="margin-top: 16px; margin-bottom: 16px;">Donor Journey</div>
+  <h1 class="heading-xl">Every visit, <span class="highlight">one smooth loop.</span></h1>
+  <p class="subtitle" style="margin: 16px auto 0; text-align:center;">From the first text to the thank-you — here's what the donor experience looks like with a phone, a wristband, or both. Zero friction, full visibility.</p>
+</div>
+
+<main class="content">
+
+  <div class="timeline">
+
+    <div class="step-row">
+      <div class="num-marker">1</div>
+      <div class="step-photo"><img src="images/journey-1.png"></div>
+      <div class="step-text">
+        <div class="eyebrow">Before the Visit</div>
+        <h3>A branded text, not an app download</h3>
+        <p>The donor gets a text with a link — tap to confirm, reschedule, or let you know they're running late. No app, no login, no friction. Works on any phone.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="num-marker">2</div>
+      <div class="step-photo"><img src="images/journey-2.png"></div>
+      <div class="step-text">
+        <div class="eyebrow">Arrival</div>
+        <h3>Walk in and you're checked in</h3>
+        <p>Donors with a phone scan a poster QR and confirm — they're in the queue instantly. Donors without a phone get a wristband after screening that tracks their journey the same way. Either path, same experience.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="num-marker">3</div>
+      <div class="step-photo"><img src="images/journey-3.png"></div>
+      <div class="step-text">
+        <div class="eyebrow">In the Queue</div>
+        <h3>An honest wait, not a guessing game</h3>
+        <p>Donors with cell phone see a live, self-updating wait range, realistic. Wristband only donors stay visible in the queue and will be alerted by staff or Donor Queue Status Boards.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="num-marker">4</div>
+      <div class="step-photo"><img src="images/journey-4.png"></div>
+      <div class="step-text">
+        <div class="eyebrow">Called Forward</div>
+        <h3>One notification when it's actually your turn</h3>
+        <p>Pulse only sends this when the donor is cleared and a spot is genuinely ready — high confidence, no false calls. The donor walks up to something, not to a second wait.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="num-marker">5</div>
+      <div class="step-photo"><img src="images/journey-5.png"></div>
+      <div class="step-text">
+        <div class="eyebrow">Recovery</div>
+        <h3>One tap — bed freed, timer started, perk unlocked</h3>
+        <p>At the snack area, the donor scans their wristband or taps on their phone. That single gesture frees their donation spot, starts the center's observation timer, and reveals a sponsor perk and a quick satisfaction survey.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="closing">
+    <div class="label-spaced" style="margin-bottom: 12px;">After Departure</div>
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px;">The visit ends, the care doesn't.</h2>
+    <p class="subtitle" style="margin: 0 auto 32px; text-align:center;">Thank-you, milestone recognition, and an easy path to rebook. Wellness check-ins go out by text — a simple "how are you feeling?" If anything's off, your team gets a callback prompt. Every touchpoint is documented.</p>
+    <p>One loop. Every donor. Documented.</p>
+  </div>
+
+</main>
+
+<div class="footer">
+  <div class="brand"><strong>PULSE</strong> &nbsp;&middot;&nbsp; A product of 448 Labs</div>
+</div>
+
+</body>
+</html>
