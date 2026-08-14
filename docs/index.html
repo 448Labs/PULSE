@@ -42,18 +42,28 @@
     padding: 24px 40px;
   }
   .logo-mark {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-.logo-mark svg { width: 40px; height: 40px; flex-shrink: 0; }
-  .logo-mark .logo-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-.logo-mark .logo-labs { color: var(--accent) !important; font-weight: 600; }
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-mark svg { width: 46px; height: 46px; flex-shrink: 0; }
+ .logo-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.logo-stack .logo-product {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.logo-stack .logo-by {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+}
 
   /* ── PARTICLES ── */
   .particles {
